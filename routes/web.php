@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
@@ -16,9 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[FrontendController::class,'index'])->name('frontend.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -44,6 +43,12 @@ Route::middleware('auth','role:admin')->group(function (){
 });
 Route::middleware('auth','role:vendor')->group(function (){
     Route::get('/vendor/dashboard',[VendorController::class,'index'])->name('vendor.dashboard');
+    Route::get('/vendor/logout',[VendorController::class,'vendorLogout'])->name('vendor.logout');
+    Route::get('/vendor/profile',[VendorController::class,'vendorProfile'])->name('vendor.profile');
+    Route::post('/vendor/profile/update',[VendorController::class,'vendorProfileUpdate'])->name('vendor.profile.update');
+    Route::get('/vendor/profile/change-password',[VendorController::class,'vendorProfileChangePassword'])->name('vendor.change.password');
+    Route::post('/vendor/profile/change-password',[VendorController::class,'vendorProfileChangePasswordStore'])->name('vendor.change.password.store');
+
 
 });
 Route::get('/admin/login',[AdminController::class,'adminLogin'])->name('admin.login');

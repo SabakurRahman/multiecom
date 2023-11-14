@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -29,6 +30,7 @@ Route::middleware('auth')->group(function (){
    Route::get('/dashboard',[UserController::class,'index'])->name('dashboard');
    Route::post('/user/profile/update',[UserController::class,'userProfileUpdate'])->name('user.profile.store');
    Route::get('/user/profile/logout',[UserController::class,'userProfileLogout'])->name('user.logout');
+   Route::post('/user/profile/change-password',[UserController::class,'userProfileChangePassword'])->name('user.change.password');
 });
 
 Route::middleware('auth')->group(function () {
@@ -46,6 +48,8 @@ Route::middleware('auth','role:admin')->group(function (){
     Route::post('/admin/profile/update',[AdminController::class,'adminProfileUpdate'])->name('admin.profile.update');
     Route::get('/admin/profile/change-password',[AdminController::class,'adminProfileChangePassword'])->name('admin.change.password');
     Route::post('/admin/profile/change-password',[AdminController::class,'adminProfileChangePasswordStore'])->name('admin.change.password.store');
+
+    Route::resource('admin/brand', BrandController::class);
 
 
 });

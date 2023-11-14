@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -47,6 +48,31 @@ class UserController extends Controller
             'alert-type' => 'success'
         ];
         return redirect()->route('login')->with($notification);
+    }
+
+    public function userProfileChangePassword(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed'
+        ]);
+
+        if(!Hash::check($request->old_password,auth()->user()->password))
+        {
+            return back()->with('error','Old Password Dose not Match');
+
+        }
+        $user =Auth::user();
+        $user->update(
+            [
+                'password'=>Hash::make($request->new_password)
+            ]
+        );
+        $notification = [
+            'message'    => 'Password Chage Successfully',
+            'alert-type' => 'success'
+        ];
+        return redirect()->back()->with($notification);
     }
 
 }

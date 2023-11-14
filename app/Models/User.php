@@ -40,7 +40,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function updateUserProfile(Request $request,$user)
+    public function updateAdminProfile(Request $request,$user)
     {
         $data= [
                'name'                => $request->input('name'),
@@ -87,6 +87,29 @@ class User extends Authenticatable
         ];
     }
 
+    public function updateUserProfile(Request $request, $user)
+    {
+        $data= [
+            'username'            => $request->input('username')??$user->username, //??'
+            'name'                => $request->input('name')??$user->name,
+            'email'               => $request->input('email')??$user->email,
+            'phone'               => $request->input('phone')??$user->phone,
+            'address'             => $request->input('address')??$user->address,
+        ];
+
+        if($request->file('photo'))
+        {
+            $photoUpLoadPath = '/upload/user_images/';
+            $file            = $request->file('photo');
+            @unlink(public_path($photoUpLoadPath.$user->photo));
+            $fileName = uniqid() . '_' . $file->getClientOriginalName();
+            $file->move(public_path($photoUpLoadPath),$fileName);
+            $data['photo'] = $fileName;
+
+        }
+
+        return $user->update($data);
+    }
 
 
 }

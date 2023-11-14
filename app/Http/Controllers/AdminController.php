@@ -29,7 +29,7 @@ class AdminController extends Controller
     {
 
        $user = Auth::user();
-        (new User())->updateUserProfile($request,$user);
+        (new User())->updateAdminProfile($request,$user);
 
         $notification = [
           'message'    => 'Admin Profile update Successfully',

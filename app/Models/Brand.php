@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Http\Requests\StoreBrandRequest;
-use App\Manager\ImageUploadManager;
+use App\Http\Requests\UpdateBrandRequest;
 use App\Manager\PhotoUploadManager;
 use App\Manager\Utility;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -38,6 +38,7 @@ class Brand extends Model
     {
         $data = [
             'brand_name' => $request->input('brand_name'),
+            'brand_slug'       => Utility::prepare_slug($request->input('brand_name')),
             'status' => $request->input('status') ?? self::STATUS_ACTIVE,
         ];
 
@@ -54,6 +55,27 @@ class Brand extends Model
 
         return $data;
 
+    }
+
+    public function updateBrand(UpdateBrandRequest $request, Brand $brand)
+    {
+        $data=[
+            'brand_name' => $request->input('brand_name')??$brand->brand_name,
+            'status' => $request->input('status') ?? $brand->status,
+        ];
+        if ($request->hasFile('photo')) {
+            (new PhotoUploadManager())->deletePhoto(self::BRAND_PHOTO_UPLOAD_PATH,$brand->brand_image);
+            $photo = ( new PhotoUploadManager)->file($request->file('photo'))
+                ->name(Utility::prepare_name($request->input('brand_name')))
+                ->path(self::BRAND_PHOTO_UPLOAD_PATH)
+                ->height(self::BRAND_PHOTO_HEIGHT)
+                ->width(self::BRAND_PHOTO_WIDTH)
+                ->upload();
+            $data['brand_image'] = $photo;
+
+        }
+
+        return $brand->update($data);
     }
 
 

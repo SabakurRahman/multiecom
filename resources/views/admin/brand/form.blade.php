@@ -8,9 +8,9 @@
 
 <!-- Status -->
 <div class="form-group row mt-2 mb-2">
-    {{ Form::label('type', 'Status', ['class' => 'col-sm-3 col-form-label']) }}
+    {{ Form::label('status', 'Status', ['class' => 'col-sm-3 col-form-label']) }}
     <div class="col-sm-9">
-        {{ Form::select('type', \App\Models\Brand::STATUS_LIST, null, ['class' => 'form-select', 'placeholder' => 'Select type']) }}
+        {{ Form::select('status', \App\Models\Brand::STATUS_LIST, null, ['class' => 'form-select', 'placeholder' => 'Select type']) }}
     </div>
 </div>
 
@@ -30,7 +30,7 @@
         <h6 class="mb-0"></h6>
     </div>
     <div class="col-sm-9 text-secondary">
-        <img id="showImage" src="{{ url('upload/no_image.jpg') }}" alt="Admin" class="rounded-circle p-1 bg-primary" height="100px" width="100px">
+        <img id="showImage" src="{{ isset($brand->brand_image)?url(App\Models\Brand::BRAND_PHOTO_UPLOAD_PATH.$brand->brand_image) : url('upload/no_image.jpg') }}" alt="Admin" class="rounded-circle p-1 bg-primary" height="100px" width="100px">
     </div>
 </div>
 

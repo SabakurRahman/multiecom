@@ -43,11 +43,15 @@
                                 <td> {{ $key+1 }} </td>
                                 <td>{{ $item->brand_name }}</td>
                                 <td> <img src="{{ asset(App\Models\Brand::BRAND_PHOTO_UPLOAD_PATH.$item->brand_image) }}" style="width: 70px; height:40px;" >  </td>
-
                                 <td>
-                                    <a href="" class="btn btn-info">Edit</a>
-                                    <a href="" class="btn btn-danger">Delete</a>
-
+                                    <div class="d-flex">
+                                        <a href="{{ route('brand.edit',$item->id) }}">
+                                            <button class="btn btn-sm btn-warning mx-1">Edit</button>
+                                        </a>
+                                        {!! Form::open(['route'=> ['brand.destroy',  $item->id], 'method'=>'delete']) !!}
+                                        {!! Form::button('delete', ['class' => 'btn btn-sm btn-danger', 'type' => 'submit']) !!}
+                                        {!! Form::close() !!}
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

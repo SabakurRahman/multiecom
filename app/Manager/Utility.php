@@ -22,4 +22,20 @@ class Utility{
         }
         return $is_url;
     }
+
+    public static function prepare_slug(mixed $input)
+    {
+        $slug = strtolower($input);
+        $slug = str_replace(' ', '-', $slug);
+        $slug = str_replace('.', '-', $slug);
+        $slug = str_replace(',', '-', $slug);
+        $slug = str_replace('?', '-', $slug);
+        $slug = str_replace('/', '-', $slug);
+        $slug = str_replace('!', '-', $slug);
+        $slug = str_replace('@', '-', $slug);
+        $slug = str_replace('#', '-', $slug);
+
+        return $slug;
+
+    }
 }

@@ -49,7 +49,7 @@
                                             <button class="btn btn-sm btn-warning mx-1">Edit</button>
                                         </a>
                                         {!! Form::open(['route'=> ['brand.destroy',  $item->id], 'method'=>'delete']) !!}
-                                        {!! Form::button('delete', ['class' => 'btn btn-sm btn-danger', 'type' => 'submit']) !!}
+                                        {!! Form::button('delete', ['class' => 'btn btn-sm btn-danger delete-button', 'type' => 'submit']) !!}
                                         {!! Form::close() !!}
                                     </div>
                                 </td>

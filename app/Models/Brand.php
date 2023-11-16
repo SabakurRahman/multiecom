@@ -63,8 +63,12 @@ class Brand extends Model
             'brand_name' => $request->input('brand_name')??$brand->brand_name,
             'status' => $request->input('status') ?? $brand->status,
         ];
-        if ($request->hasFile('photo')) {
-            (new PhotoUploadManager())->deletePhoto(self::BRAND_PHOTO_UPLOAD_PATH,$brand->brand_image);
+        if ($request->hasFile('photo'))
+        {
+            if($brand->brand_image){
+                (new PhotoUploadManager())->deletePhoto(self::BRAND_PHOTO_UPLOAD_PATH,$brand->brand_image);
+            }
+
             $photo = ( new PhotoUploadManager)->file($request->file('photo'))
                 ->name(Utility::prepare_name($request->input('brand_name')))
                 ->path(self::BRAND_PHOTO_UPLOAD_PATH)

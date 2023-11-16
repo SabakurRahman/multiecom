@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="{{ asset('adminbackend/assets/css/dark-theme.css') }}" />
     <link rel="stylesheet" href="{{ asset('adminbackend/assets/css/semi-dark.css') }}" />
     <link rel="stylesheet" href="{{ asset('adminbackend/assets/css/header-colors.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- DataTable -->
     <link href="{{ asset('adminbackend/assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
@@ -117,6 +118,8 @@
     }
     @endif
 </script>
+
+@include('scripts.script');
 
 
 </body>

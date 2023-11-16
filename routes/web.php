@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -50,6 +51,7 @@ Route::middleware('auth','role:admin')->group(function (){
     Route::post('/admin/profile/change-password',[AdminController::class,'adminProfileChangePasswordStore'])->name('admin.change.password.store');
 
     Route::resource('admin/brand', BrandController::class);
+    Route::resource('admin/category', CategoryController::class);
 
 
 });

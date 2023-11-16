@@ -86,7 +86,7 @@
                                     <img src="assets/imgs/theme/icons/logo-facebook.svg" alt="" />
                                     <span>Continue with Facebook</span>
                                 </a>
-                                <a href="#" class="social-login google-login">
+                                <a href="/auth/google/redirect" class="social-login google-login">
                                     <img src="assets/imgs/theme/icons/logo-google.svg" alt="" />
                                     <span>Continue with Google</span>
                                 </a>

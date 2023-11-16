@@ -5,6 +5,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
@@ -66,7 +67,9 @@ Route::middleware('auth','role:vendor')->group(function (){
 
 });
 Route::get('/admin/login',[AdminController::class,'adminLogin'])->name('admin.login');
+Route::get('/auth/{provider}/redirect', [SocialController::class, 'redirect']);
 
+Route::get('/auth/{provider}/callback', [SocialController::class, 'callback']);
 
 
 require __DIR__.'/auth.php';

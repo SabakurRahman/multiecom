@@ -34,8 +34,12 @@ class BrandController extends Controller
     public function store(StoreBrandRequest $request)
     {
         //
+        $notification = array(
+            'message' => 'Brand created successfully!',
+            'alert-type' => 'success'
+        );
         $this->brand->storeBrand($request);
-        return redirect()->route('brand.index')->with('success', 'Brand created successfully.');
+        return redirect()->route('brand.index')->with($notification);
 
 
     }

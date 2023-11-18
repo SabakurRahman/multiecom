@@ -36,6 +36,7 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Vendor Name</th>
                                 <th scope="col">Image</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Action</th>
                             </tr>
                             </thead>
@@ -45,6 +46,7 @@
                                     <th scope="row">{{$key+1}}</th>
                                     <td>{{$item->shop_name}}</td>
                                     <td> <img src="{{ asset(App\Models\Vendor::SHOP_PHOTO_UPLOAD_PATH.$item->shop_logo) }}" style="width: 70px; height:40px;" >  </td>
+                                    <td>{{App\Models\Vendor::STATUS_LIST[$item?->user?->status]}}</td>
                                     <td>
                                         <div class="d-flex">
                                             <a href="{{ route('vendor.edit',$item->id) }}">

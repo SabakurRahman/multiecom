@@ -16,7 +16,7 @@ class Vendor extends Model
     public const STATUS_ACTIVE = 1;
     public const STATUS_INACTIVE = 2;
 
-    public const STATUS = [
+    public const STATUS_LIST = [
         self::STATUS_ACTIVE => 'Active',
         self::STATUS_INACTIVE => 'Inactive',
     ];
@@ -56,5 +56,10 @@ class Vendor extends Model
         }
         return $data;
 
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

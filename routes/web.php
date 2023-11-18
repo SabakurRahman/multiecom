@@ -57,7 +57,7 @@ Route::middleware('auth','role:admin')->group(function (){
     Route::resource('admin/sub-category', SubCategoryController::class);
     Route::get('admin/vendor-list',[VendorController::class,'vendorList'])->name('vendor.list');
     Route::get('admin/vendor-edit/{id}',[VendorController::class,'vendorEdit'])->name('vendor.edit');
-    Route::post('admin/vendor-update/{id}',[VendorController::class,'vendorUpdate'])->name('update.vendor');
+    Route::put('admin/vendor-update/{id}',[VendorController::class,'vendorUpdate'])->name('update.vendor');
 
 
 });

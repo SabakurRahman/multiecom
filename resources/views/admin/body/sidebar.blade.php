@@ -62,6 +62,20 @@
         </li>
         <li>
             <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class='bx bx-home-circle'></i>
+                </div>
+                <div class="menu-title">Vendor</div>
+            </a>
+            <ul>
+                <li> <a href="{{route('vendor.list')}}"><i class="bx bx-right-arrow-alt"></i>Vendor List</a>
+                </li>
+                <li> <a href="#"><i class="bx bx-right-arrow-alt"></i>Vendor Create</a>
+                </li>
+
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class="bx bx-category"></i>
                 </div>
                 <div class="menu-title">Application</div>

@@ -25,7 +25,7 @@ class VendorController extends Controller
 
    public function vendorList()
    {
-         $vendors = Vendor::query()->paginate(10);
+         $vendors = Vendor::query()->with('user')->paginate(10);
          return view('vendor.vendorList',compact('vendors'));
    }
 
@@ -114,8 +114,8 @@ class VendorController extends Controller
 
     public function vendorUpdate(Request $request)
     {
-        $vendor = Vendor::query()->findOrFail($request->id);
-        $vendor->update([
+        $vendor = Vendor::query()->with('user')->findOrFail($request->id);
+        $vendor->user->update([
             'status' => $request->status
         ]);
         $notification = [
@@ -128,8 +128,11 @@ class VendorController extends Controller
     public function vendorEdit($id)
     {
         $vendor = Vendor::query()->findOrFail($id);
+        $vendor->load('user');
         return view('vendor.vendor-active',compact('vendor'));
     }
+
+
 
 
 

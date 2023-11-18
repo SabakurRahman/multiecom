@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class VendorController extends Controller
 {
+    public function __construct()
+    {
+        $this->vendor = new Vendor();
+    }
    public function index()
    {
        return view('vendor.dashboard');
@@ -16,6 +21,47 @@ class VendorController extends Controller
    public function vendorLogin()
    {
        return view('vendor.login');
+   }
+
+   public function vendorList()
+   {
+         $vendors = Vendor::query()->paginate(10);
+         return view('vendor.vendorList',compact('vendors'));
+   }
+
+   public function vendorRegister()
+   {
+         return view('vendor.register');
+   }
+
+   public function storeVendor(Request $request)
+   {
+       $request->validate([
+           'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+           'password' => ['required', 'confirmed'],
+       ]);
+
+            $user = User::create([
+           'email'    => $request->email,
+           'username' => $request->username,
+           'phone'    => $request->phone,
+           'password' => Hash::make($request->password),
+            'role'    => 'vendor',
+           'status'   => User::STATUS_INACTIVE,
+
+       ]);
+
+       $this->vendor->createVendor($request,$user);
+
+         $notification = [
+              'message'    => 'Vendor Register Successfully',
+              'alert-type' => 'success'
+         ];
+            return redirect()->route('vendor.register')->with($notification);
+
+
+
+
    }
     public function vendorProfile()
     {
@@ -64,6 +110,25 @@ class VendorController extends Controller
     {
         Auth::logout();
         return redirect()->route('vendor.login');
+    }
+
+    public function vendorUpdate(Request $request)
+    {
+        $vendor = Vendor::query()->findOrFail($request->id);
+        $vendor->update([
+            'status' => $request->status
+        ]);
+        $notification = [
+            'message'    => 'Vendor Status Update Successfully',
+            'alert-type' => 'success'
+        ];
+        return redirect()->back()->with($notification);
+    }
+
+    public function vendorEdit($id)
+    {
+        $vendor = Vendor::query()->findOrFail($id);
+        return view('vendor.vendor-active',compact('vendor'));
     }
 
 

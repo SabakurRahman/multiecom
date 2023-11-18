@@ -55,6 +55,9 @@ Route::middleware('auth','role:admin')->group(function (){
     Route::resource('admin/brand', BrandController::class);
     Route::resource('admin/category', CategoryController::class);
     Route::resource('admin/sub-category', SubCategoryController::class);
+    Route::get('admin/vendor-list',[VendorController::class,'vendorList'])->name('vendor.list');
+    Route::get('admin/vendor-edit/{id}',[VendorController::class,'vendorEdit'])->name('vendor.edit');
+    Route::post('admin/vendor-update/{id}',[VendorController::class,'vendorUpdate'])->name('update.vendor');
 
 
 });
@@ -72,6 +75,9 @@ Route::get('/admin/login',[AdminController::class,'adminLogin'])->name('admin.lo
 Route::get('/auth/{provider}/redirect', [SocialController::class, 'redirect']);
 
 Route::get('/auth/{provider}/callback', [SocialController::class, 'callback']);
+
+Route::get('/vendor/register',[VendorController::class,'vendorRegister'])->name('vendor.register');
+Route::post('/vendor/store',[VendorController::class,'storeVendor'])->name('store.vendor');
 
 
 require __DIR__.'/auth.php';

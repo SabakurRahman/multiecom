@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -39,7 +40,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+   public const STATUS_ACTIVE = 1;
+    public const STATUS_INACTIVE = 2;
 
+    public const STATUS_LIST = [
+        self::STATUS_ACTIVE => 'Active',
+        self::STATUS_INACTIVE => 'Inactive',
+    ];
     public function updateAdminProfile(Request $request,$user)
     {
         $data= [
@@ -82,8 +89,8 @@ class User extends Authenticatable
             'phone'    =>$request->phone,
             'address'  =>$request->address,
             'role'     =>$request->role,
-            'status'   =>$request->status,
-            'password' =>bcrypt($request->password)
+            'status'   =>$request->status ?? self::STATUS_ACTIVE,
+            'password' =>Hash::make($request->password)
         ];
     }
 
